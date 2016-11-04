@@ -9,10 +9,10 @@ app.get("/", function(req, res){
 
 app.get("/:date", function(req, res){
 	var date = req.params.date;
-	var a = moment(date);
+	var a = moment(date, moment.ISO_8601);
 	var obj = {
 		unix: date,
-		natural: a.format('MMMM Do YYYY')};
+		natural: a.format('LL')};
 	res.json(obj);
 });
 app.listen(process.env.PORT||8080);
