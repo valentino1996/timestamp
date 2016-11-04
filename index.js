@@ -8,15 +8,25 @@ app.get("/", function(req, res){
 });
 
 app.get("/:date", function(req, res){
+	
 	var date = req.params.date;
-	var a = moment(date, moment.ISO_8601);
+	var a = moment(date);
 	var b = a.format('LL');
-	if(b=="Invalid date"){
-		b = "January 1st 1970";
+	var obj = {};
+	
+	if(isNaN(Number(date))){
+		obj = {
+			unix : moment(date).unix(),
+			natural: b
+		};
 	}
-	var obj = {
+	else{
+	obj = {
 		unix: date,
-		natural: b};
+		timestamp: moment.unix(date)
+		};
+	}
+		
 	res.json(obj);
 });
 app.listen(process.env.PORT||8080);
